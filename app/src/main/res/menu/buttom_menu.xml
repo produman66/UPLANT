@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/book"
+        android:icon="@drawable/icon_1"
+        android:title="Spravochnik"/>
+    <item
+        android:id="@+id/plant"
+        android:icon="@drawable/icon_2"
+        android:title="Plant"/>
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/icon_3"
+        android:title="Favorite"/>
+    <item
+        android:id="@+id/profile1"
+        android:icon="@drawable/icon_4"
+        android:title="Profile"/>
+</menu>
