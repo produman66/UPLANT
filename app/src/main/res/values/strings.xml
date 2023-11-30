@@ -57,4 +57,13 @@
     <string name="home">Описание</string>
     <string name="napom">Напоминания</string>
     <string name="moment">Моменты</string>
+    <string name="vecher">Вечер</string>
+    <string name="razmnozhenie">Размножение</string>
+    <string name="obrezka">Обрезка</string>
+    <string name="zashita">Защита</string>
+    <string name="svet">Освещение</string>
+    <string name="temp">Температурный режим</string>
+    <string name="vlazh">Влажность</string>
+    <string name="zadanya">Задания</string>
+    <string name="udobr">Удобрение</string>
 </resources>

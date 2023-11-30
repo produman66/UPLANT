@@ -4,21 +4,27 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import edu.example.uplant.R;
-import edu.example.uplant.data.data_sources.category.room.entites.Plant;
+import edu.example.uplant.data.data_sources.category.models.PlantModel;
 import edu.example.uplant.ui.adapters.CustomerClickListener;
 import edu.example.uplant.ui.adapters.SpravochnikAdapters.PlantListAdapter;
 import edu.example.uplant.ui.view_models.SpravochnikViewModel.PlantViewModel;
@@ -26,7 +32,6 @@ import edu.example.uplant.ui.view_models.SpravochnikViewModel.PlantViewModel;
 public class MyPlantCategory extends Fragment implements CustomerClickListener {
     private PlantViewModel mWordViewModel;
     PlantListAdapter adapter;
-    Fragment fragment12;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +45,16 @@ public class MyPlantCategory extends Fragment implements CustomerClickListener {
         mWordViewModel.getAllWords().observe(getActivity(), words -> {
             adapter.submitList(words);
         });
+
+
+        ImageButton sed_message = view.findViewById(R.id.sug_mes);
+        sed_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_myPlantCategory2_to_sendMessage);
+            }
+        });
+
         Toolbar toolbar = view.findViewById(R.id.toolbar12);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -50,22 +65,19 @@ public class MyPlantCategory extends Fragment implements CustomerClickListener {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                Navigation.findNavController(v).navigate(R.id.action_myPlantCategory2_to_myPlantMain2);
             }
         });
         return view;
     }
     @Override
     public void onCustomerClick(int position) {
-        Plant selectedPlant = adapter.getCurrentList().get(position);
-        Fragment fragment = new MyPlantAllPlants();
+        PlantModel selectedPlant = adapter.getCurrentList().get(position);
         Bundle args = new Bundle();
-        args.putString("key", selectedPlant.getWord());
+        args.putString("key", selectedPlant.getName());
         args.putInt("key1", selectedPlant.getId());
-        fragment.setArguments(args);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(null); // Добавляем транзакцию в backstack
-        transaction.commit();
+        NavController navController = NavHostFragment.findNavController(MyPlantCategory.this);
+        navController.navigate(R.id.action_myPlantCategory2_to_myPlantAllPlants2, args);
     }
+
 }

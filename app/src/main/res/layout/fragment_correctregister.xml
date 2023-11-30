@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.view.Authorization">
+    android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -35,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
-            android:text="@string/registration"
+            android:text="Ваше сообщение отправлено"
             android:theme="@style/uplants1" />
 
     </LinearLayout>
@@ -44,8 +43,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="236dp"
+        android:id="@+id/btncor"
+        android:padding="10dp"
+        android:background="@drawable/round_background"
         android:backgroundTint="@color/green_600"
-        android:id="@+id/btncorreg"
         android:textColor="@color/white"
         android:text="@string/Continue"
         app:layout_constraintBottom_toBottomOf="parent"

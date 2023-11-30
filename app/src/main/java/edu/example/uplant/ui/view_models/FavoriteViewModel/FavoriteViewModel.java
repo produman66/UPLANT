@@ -11,23 +11,28 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import edu.example.uplant.data.data_sources.category.repositories.FavoriteRepository.FavoriteRepository;
-import edu.example.uplant.data.data_sources.category.room.entites.MyPlant;
+import edu.example.uplant.data.data_sources.category.models.MyPlantModel;
+import edu.example.uplant.data.data_sources.category.models.NapPlantModel;
+import edu.example.uplant.data.data_sources.category.repositories.MyPlantRepository;
 
 public class FavoriteViewModel extends AndroidViewModel {
-    private FavoriteRepository mRepository;
-    private final LiveData<List<MyPlant>> mAllWords;
+    private MyPlantRepository mRepository;
+    private LiveData<List<MyPlantModel>> favPlant;
     public FavoriteViewModel(@NonNull Application application) {
         super(application);
         try {
-            mRepository = new FavoriteRepository(application);
-            mAllWords = mRepository.getAllWords();
+            mRepository = new MyPlantRepository(application);
         } catch (Exception e) {
             // обработка исключения
             Log.e(TAG, "Error while creating MyPlantViewModel object", e);
             throw new RuntimeException("Error while creating MyPlantViewModel object", e);
         }
     }
-    public LiveData<List<MyPlant>> getAllWords() { return mAllWords; }
+    public LiveData<List<MyPlantModel>> getFav(String email){
+        favPlant = mRepository.AllPlantFavorite(email);
+        return favPlant;
+    }
+
+
 
 }

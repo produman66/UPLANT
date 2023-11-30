@@ -12,6 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +22,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import edu.example.uplant.R;
 import edu.example.uplant.ui.adapters.MyPlantAdapter.MyPlantOpisAdapter;
@@ -29,8 +35,11 @@ public class MyPlantOpisEdit extends Fragment {
     MyPlantOpisViewModel mViewModel;
     private static final String STR_VALUE_KEY = "key";
     private static final String MyNamePlant = "key1";
-    private String mStrValue, mStrValue1;
+    private String name, nameimage;
     private String MyName;
+    private FirebaseAuth mAuth;
+
+
     MyPlantOpisAdapter adapter;
     Toolbar toolbar;
     String desc;
@@ -55,14 +64,14 @@ public class MyPlantOpisEdit extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                Navigation.findNavController(view).popBackStack();
             }
         });
 
 
-        mStrValue = getArguments().getString(STR_VALUE_KEY);
+        name = getArguments().getString(STR_VALUE_KEY);
         MyName = getArguments().getString(MyNamePlant);
-        mStrValue1 = getArguments().getString("key2");
+        nameimage = getArguments().getString("key2");
 
         RecyclerView recyclerView = view.findViewById(R.id.plantrecycler26);
         adapter = new MyPlantOpisAdapter(new MyPlantOpisAdapter.PlantDiff());
@@ -74,10 +83,15 @@ public class MyPlantOpisEdit extends Fragment {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new MyPlantOpisViewModel(activity.getApplication(), mStrValue);
+                return (T) new MyPlantOpisViewModel(activity.getApplication());
             }
         }).get(MyPlantOpisViewModel.class);
-        mViewModel.getAllWords().observe(getActivity(), words -> {
+
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String email = user.getEmail();
+        mViewModel.getAllWords(name, email).observe(getActivity(), words -> {
             adapter.submitList(words);
         });
 
@@ -93,21 +107,16 @@ public class MyPlantOpisEdit extends Fragment {
                     perec = viewHolder.wordPeresad.getText().toString();
                     udobr = viewHolder.wordUdobr.getText().toString();
                 }
-                Fragment fragment = new MyPlantZametkyEdit();
                 Bundle args = new Bundle();
-//                args.putStringArrayList("textList", new ArrayList<>(textList));
                 args.putString("name", MyName);
                 args.putString("desc", desc);
                 args.putString("poliv", poliv);
                 args.putString("perec", perec);
                 args.putString("udobr", udobr);
-                args.putString("key", mStrValue);
-                args.putString("key1", mStrValue1);
-                fragment.setArguments(args);
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                args.putString("key", name);
+                args.putString("key1", nameimage);
+                NavController navController = NavHostFragment.findNavController(MyPlantOpisEdit.this);
+                navController.navigate(R.id.action_myPlantOpisEdit2_to_myPlantZametkyEdit2, args);
             }
         });
         return view;

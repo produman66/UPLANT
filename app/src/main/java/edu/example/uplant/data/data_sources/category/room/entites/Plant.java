@@ -8,30 +8,40 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import edu.example.uplant.data.data_sources.category.models.PlantModel;
+
 @Entity(tableName = "plant_categ_table")
 public class Plant {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     public int id;
-
-    public int getId() {
-        return id;
-    }
 
     @NonNull
     @ColumnInfo(name = "plant")
-    public String mWord;
+    public String name;
 
     @NonNull
     @ColumnInfo(name = "nameimage")
     public String nameimage;
-    public Plant() {}
 
     @Ignore
     ImageView image;
 
-    public Plant( int id, @NonNull String word, @NonNull String nameimage) {
-        this.id = id; this.mWord = word; this.nameimage = nameimage;}
-    public String getWord(){return this.mWord;}
+
+    public String getName(){return this.name;}
     public String getImage1() {return this.nameimage;}
+    public int getId() {
+        return id;
+    }
+
+
+    public Plant() {}
+    public Plant( int id, @NonNull String name, @NonNull String nameimage) {
+        this.id = id;
+        this.name = name;
+        this.nameimage = nameimage;
+    }
+    public PlantModel toDomainModel() {
+        return new PlantModel(id, name, nameimage);
+    }
 }

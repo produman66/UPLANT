@@ -1,8 +1,6 @@
 package edu.example.uplant.ui.view.MyPlantUI;
 
-import android.app.Application;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +9,9 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,19 +20,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.UUID;
+
 import edu.example.uplant.R;
-import edu.example.uplant.data.data_sources.category.repositories.MyPlantRepository.AddPlantRepository;
-import edu.example.uplant.data.data_sources.category.room.entites.AddPlant;
+
+import edu.example.uplant.ui.view_models.MyPlantViewModel.AddPlantViewModel;
 
 public class MyPlantZametkyEdit extends Fragment {
+    public FirebaseAuth mAuth;
     public String desc, poliv, peresad, udobr, name, nameOriginal, ImageOriginal;
+    UUID DEM;
+    int id;
     EditText text;
     Toolbar toolbar;
     Button button;
+    AddPlantViewModel mViewModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_plant_zametky_e, container, false);
+        mAuth = FirebaseAuth.getInstance();
         text = view.findViewById(R.id.zametky);
         desc = getArguments().getString("desc");
         poliv = getArguments().getString("poliv");
@@ -53,49 +64,26 @@ public class MyPlantZametkyEdit extends Fragment {
                 getFragmentManager().popBackStack();
             }
         });
+
+
+        mViewModel = new ViewModelProvider(this).get(AddPlantViewModel.class);
+
+
         button = view.findViewById(R.id.save);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String txt = String.valueOf(text.getText());
-                new AddPlantTask(getActivity().getApplication(), name, desc, poliv, peresad, udobr, ImageOriginal, txt).execute();
-                Fragment fragment = new MyPlantMain();
-//                args.putStringArrayList("textList", new ArrayList<>(textList));
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                FirebaseUser user = mAuth.getCurrentUser();
+                String email = user.getEmail();
+                DEM = UUID.randomUUID();
+                id = DEM.hashCode();
+                String zametky = String.valueOf(text.getText());
+                mViewModel.addPlant(id, email, name, desc, poliv, peresad, udobr, ImageOriginal, zametky);
+                NavController navController = NavHostFragment.findNavController(MyPlantZametkyEdit.this);
+                navController.navigate(R.id.action_myPlantZametkyEdit2_to_myPlantMain2);
                 Toast.makeText(getActivity().getApplicationContext(), "Растение добавлено", Toast.LENGTH_LONG).show();
             }
         });
         return view;
-    }
-    private static class AddPlantTask extends AsyncTask<Void, Void, Void> {
-        private Application application;
-        private String name;
-        private String desc;
-        private String poliv;
-        private String peresad;
-        private String udobr;
-        private String nameimage;
-        private String zametky;
-
-        public AddPlantTask(Application application, String name, String desc, String poliv, String peresad, String udobr, String nameimage, String zametky) {
-            this.application = application;
-            this.name = name;
-            this.desc = desc;
-            this.poliv = poliv;
-            this.peresad = peresad;
-            this.udobr = udobr;
-            this.nameimage = nameimage;
-            this.zametky = zametky;
-        }
-        @Override
-        protected Void doInBackground(Void... voids) {
-            AddPlantRepository repo = new AddPlantRepository(application, name, desc, poliv, peresad, udobr, nameimage, zametky);
-            repo.addPlant(new AddPlant(name, desc, poliv, peresad, udobr, nameimage, zametky));
-            return null;
-        }
     }
 }

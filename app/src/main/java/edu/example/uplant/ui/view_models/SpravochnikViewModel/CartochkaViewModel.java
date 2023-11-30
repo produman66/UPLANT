@@ -11,22 +11,22 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import edu.example.uplant.data.data_sources.category.repositories.SpravochnikRepository.CartochkaRepository;
-import edu.example.uplant.data.data_sources.category.room.entites.MyPlant;
+import edu.example.uplant.data.data_sources.category.models.MyPlantModel;
+import edu.example.uplant.data.data_sources.category.repositories.MyPlantRepository;
 
 public class CartochkaViewModel extends AndroidViewModel {
-    private CartochkaRepository mRepository;
-    private final LiveData<List<MyPlant>> mAllWords;
-    public CartochkaViewModel(@NonNull Application application, String name) {
+    private MyPlantRepository mRepository;
+
+    public CartochkaViewModel(@NonNull Application application) {
         super(application);
         try {
-            mRepository = new CartochkaRepository(application, name);
-            mAllWords = mRepository.getplants();
+            mRepository = new MyPlantRepository(application);
         } catch (Exception e) {
             // обработка исключения
             Log.e(TAG, "Error while creating MyPlantViewModel object", e);
             throw new RuntimeException("Error while creating MyPlantViewModel object", e);
         }
     }
-    public LiveData<List<MyPlant>> getAllWords() { return mAllWords; }
+    public LiveData<List<MyPlantModel>> getAllWords(String name, String email) {
+        return mRepository.PlantVibor(name, email); }
 }

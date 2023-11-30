@@ -6,14 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import edu.example.uplant.data.data_sources.category.room.entites.AddPlant;
-import edu.example.uplant.data.data_sources.category.room.entites.MyPlant;
+import edu.example.uplant.data.data_sources.category.models.AddPlantModel;
 import edu.example.uplant.ui.adapters.MyPlantViewHolder.PagerMyPlantViewHolder;
-import edu.example.uplant.ui.adapters.SpravochnikViewHolder.CartochkaViewHolder;
 
-public class PagerMyPlantAdapter extends ListAdapter<AddPlant, PagerMyPlantViewHolder> {
+public class PagerMyPlantAdapter extends ListAdapter<AddPlantModel, PagerMyPlantViewHolder> {
 
-    public PagerMyPlantAdapter(@NonNull DiffUtil.ItemCallback<AddPlant> diffCallback) {
+    public PagerMyPlantAdapter(@NonNull DiffUtil.ItemCallback<AddPlantModel> diffCallback) {
         super(diffCallback);
     }
 
@@ -25,17 +23,17 @@ public class PagerMyPlantAdapter extends ListAdapter<AddPlant, PagerMyPlantViewH
 
     @Override
     public void onBindViewHolder(@NonNull PagerMyPlantViewHolder holder, int position) {
-        AddPlant current = getItem(position);
+        AddPlantModel current = getItem(position);
         holder.bind1(current.getName(), current.getNameimage(), current.getDesc(), current.getZametky(), current.getPoliv(), current.getPeresad(), current.getUdobr());
     }
-    public static class PlantDiff extends DiffUtil.ItemCallback<AddPlant> {
+    public static class PlantDiff extends DiffUtil.ItemCallback<AddPlantModel> {
         @Override
-        public boolean areItemsTheSame(@NonNull AddPlant oldItem, @NonNull AddPlant newItem) {
+        public boolean areItemsTheSame(@NonNull AddPlantModel oldItem, @NonNull AddPlantModel newItem) {
             return oldItem == newItem;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull AddPlant oldItem, @NonNull AddPlant newItem) {
+        public boolean areContentsTheSame(@NonNull AddPlantModel oldItem, @NonNull AddPlantModel newItem) {
             return oldItem.getName().equals(newItem.getName());
         }
     }

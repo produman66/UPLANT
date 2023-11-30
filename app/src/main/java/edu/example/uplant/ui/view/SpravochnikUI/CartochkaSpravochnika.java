@@ -14,6 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import edu.example.uplant.R;
 import edu.example.uplant.ui.view_models.SpravochnikViewModel.CartochkaViewModel;
 import edu.example.uplant.ui.adapters.SpravochnikAdapters.CartochkaAdapter;
@@ -24,6 +27,7 @@ public class CartochkaSpravochnika extends Fragment {
     private static final String STR_VALUE_KEY = "key";
     private String mStrValue;
     CartochkaAdapter adapter;
+    private FirebaseAuth mAuth;
 
     public static CartochkaSpravochnika newInstance(String strValue) {
         CartochkaSpravochnika fragment = new CartochkaSpravochnika();
@@ -46,10 +50,14 @@ public class CartochkaSpravochnika extends Fragment {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new CartochkaViewModel(activity.getApplication(), mStrValue);
+                return (T) new CartochkaViewModel(activity.getApplication());
             }
         }).get(CartochkaViewModel.class);
-        mViewModel.getAllWords().observe(getActivity(), words -> {
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String email = user.getEmail();
+        mViewModel.getAllWords(mStrValue, email).observe(getActivity(), words -> {
             adapter.submitList(words);
         });
         return view;

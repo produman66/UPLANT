@@ -8,19 +8,19 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import edu.example.uplant.data.data_sources.category.room.entites.Plant;
-import edu.example.uplant.data.data_sources.category.repositories.SpravochnikRepository.PlantRepository;
+import edu.example.uplant.data.data_sources.category.models.PlantModel;
+import edu.example.uplant.data.data_sources.category.repositories.PlantCategoryRepository;
 
 public class PlantViewModel extends AndroidViewModel {
 
-    private PlantRepository mRepository;
+    private PlantCategoryRepository mRepository;
 
-    private final LiveData<List<Plant>> mAllWords;
+    private final LiveData<List<PlantModel>> mAllWords;
 
     public PlantViewModel(@NonNull Application application) {
         super(application);
-        mRepository = new PlantRepository(application);
-        mAllWords = mRepository.getAllWords();
+        mRepository = new PlantCategoryRepository(application);
+        mAllWords = mRepository.getDatabaseDataPlant();
     }
-    public LiveData<List<Plant>> getAllWords() { return mAllWords; }
+    public LiveData<List<PlantModel>> getAllWords() { return mAllWords; }
 }

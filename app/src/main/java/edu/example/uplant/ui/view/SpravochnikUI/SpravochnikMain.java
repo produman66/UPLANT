@@ -2,11 +2,15 @@ package edu.example.uplant.ui.view.SpravochnikUI;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,18 +21,17 @@ import android.view.ViewGroup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.example.uplant.R;
-import edu.example.uplant.data.data_sources.category.room.entites.Plant;
-import edu.example.uplant.ui.view.FavoriteUI.FavoriteMain;
-import edu.example.uplant.ui.view.MyPlantUI.MyPlantMain;
-import edu.example.uplant.ui.ProfileMain;
+import edu.example.uplant.data.data_sources.category.models.PlantModel;
 import edu.example.uplant.ui.adapters.CustomerClickListener;
 import edu.example.uplant.ui.adapters.SpravochnikAdapters.PlantListAdapter;
+import edu.example.uplant.ui.view.MyPlantUI.MyPlantMain;
 import edu.example.uplant.ui.view_models.SpravochnikViewModel.PlantViewModel;
 
 public class SpravochnikMain extends Fragment implements CustomerClickListener {
     private PlantViewModel mWordViewModel;
     PlantListAdapter adapter;
     Fragment fragment12;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,41 +54,34 @@ public class SpravochnikMain extends Fragment implements CustomerClickListener {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.plant:
-                    fragment12 = new MyPlantMain();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.container, fragment12).addToBackStack(null);
-                    transaction.commit();
+                    Navigation.findNavController(view).navigate(R.id.action_global_myPlantFragment);
                     return true;
                 case R.id.book:
                     return true;
                 case R.id.favorite:
-                    fragment12 = new FavoriteMain();
-                    FragmentTransaction transaction1 = getFragmentManager().beginTransaction();
-                    transaction1.replace(R.id.container, fragment12).addToBackStack(null);
-                    transaction1.commit();
+                    Navigation.findNavController(view).navigate(R.id.action_global_favoriteFragment);
                     return true;
                 case R.id.profile1:
-                    fragment12 = new ProfileMain();
-                    FragmentTransaction transaction2 = getFragmentManager().beginTransaction();
-                    transaction2.replace(R.id.container, fragment12).addToBackStack(null);
-                    transaction2.commit();
+                    Navigation.findNavController(view).navigate(R.id.action_global_profileFragment);
                     return true;
             }
             return false;
+        });
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(view).navigate(R.id.action_global_myPlantFragment);
+            }
         });
         return view;
     }
     @Override
     public void onCustomerClick(int position) {
-        Plant selectedPlant = adapter.getCurrentList().get(position);
-        Fragment fragment = new SpravochnicSearch();
+        PlantModel selectedPlant = adapter.getCurrentList().get(position);
         Bundle args = new Bundle();
-        args.putString("key", selectedPlant.getWord());
+        args.putString("key", selectedPlant.getName());
         args.putInt("key1", selectedPlant.getId());
-        fragment.setArguments(args);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(null); // Добавляем транзакцию в backstack
-        transaction.commit();
+        NavController navController = NavHostFragment.findNavController(SpravochnikMain.this);
+        navController.navigate(R.id.action_spravochnikMain2_to_spravochnicSearch2, args);
     }
 }

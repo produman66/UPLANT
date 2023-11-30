@@ -1,18 +1,16 @@
 package edu.example.uplant.ui.view.MyPlantUI;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,19 +21,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import edu.example.uplant.R;
 import edu.example.uplant.ui.adapters.MyPlantAdapter.EditMyPlantAdapter;
-import edu.example.uplant.ui.adapters.MyPlantAdapter.PagerMyPlantAdapter;
 import edu.example.uplant.ui.adapters.MyPlantViewHolder.EditMyPlantViewHolder;
-import edu.example.uplant.ui.adapters.MyPlantViewHolder.MyPlantOpisViewHolder;
-import edu.example.uplant.ui.view_models.MyPlantViewModel.MyPlantAddViewModel;
 import edu.example.uplant.ui.view_models.MyPlantViewModel.PagerMyPlantViewModel;
 import edu.example.uplant.ui.view_models.MyPlantViewModel.UpdateMyPlantViewModel;
-import edu.example.uplant.ui.view_models.SpravochnikViewModel.Cartochka4ViewModel;
 
 public class EditMyPlant extends Fragment {
     private final int PICK_IMAGE_REQUEST = 22;
@@ -62,7 +55,7 @@ public class EditMyPlant extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                Navigation.findNavController(view).popBackStack();
             }
         });
         setHasOptionsMenu(true);
@@ -79,10 +72,10 @@ public class EditMyPlant extends Fragment {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new PagerMyPlantViewModel(activity.getApplication(), id);
+                return (T) new PagerMyPlantViewModel(activity.getApplication());
             }
         }).get(PagerMyPlantViewModel.class);
-        mViewModel.getAllWords().observe(getActivity(), words -> {
+        mViewModel.getAllWords(id).observe(getActivity(), words -> {
             adapter.submitList(words);
         });
         mViewModel1 = new ViewModelProvider(this).get(UpdateMyPlantViewModel.class);
@@ -92,11 +85,7 @@ public class EditMyPlant extends Fragment {
             @Override
             public void onClick(View v) {
                 mViewModel1.deletePlant(id);
-                Fragment fragment = new MyPlantMain();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                Navigation.findNavController(view).navigate(R.id.action_editMyPlant2_to_myPlantMain2);
                 Toast.makeText(getActivity(), "Растение удалено", Toast.LENGTH_SHORT).show();
             }
         });

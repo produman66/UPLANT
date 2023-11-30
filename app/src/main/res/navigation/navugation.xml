@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navugation"
+    app:startDestination="@id/splashScreen">
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="edu.example.uplant.SplashScreen"
+        android:label="SplashScreen"
+        tools:layout="@layout/fragment_splash_screen">
+        <action
+            android:id="@+id/action_splashScreen_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment1"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreen_to_authorization"
+            app:destination="@id/authorization1"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreen_to_myPlantMain2"
+            app:destination="@id/myPlantMain2"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewPagerFragment1"
+        android:name="edu.example.uplant.ui.FirstStart.ViewPagerFragment"
+        android:label="ViewPagerFragment" >
+        <action
+            android:id="@+id/action_viewPagerFragment1_to_authorization1"
+            app:destination="@id/authorization1"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/viewPagerFragment1"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/authorization1"
+        android:name="edu.example.uplant.ui.view.AutorizationUI.Authorization"
+        android:label="Authorization"
+        tools:layout="@layout/fragment_authorization">
+        <action
+            android:id="@+id/action_authorization1_to_myPlantMain2"
+            app:destination="@id/myPlantMain2"
+            app:popUpTo="@id/authorization1"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_authorization1_to_registration2"
+            app:destination="@id/registration2" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPlantMain2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.MyPlantMain"
+        android:label="MyPlantMain"
+        tools:layout="@layout/fragment_my_plant_main">
+        <action
+            android:id="@+id/action_myPlantMain2_to_myPlantCategory2"
+            app:destination="@id/myPlantCategory2" />
+        <action
+            android:id="@+id/action_myPlantMain2_to_pagerMyPlant"
+            app:destination="@id/pagerMyPlant" />
+        <action
+            android:id="@+id/action_myPlantMain2_to_myPlantNapMain2"
+            app:destination="@id/myPlantNapMain2" />
+        <action
+            android:id="@+id/action_myPlantMain2_to_newNapominanieDemo2"
+            app:destination="@id/newNapominanieDemo2" />
+    </fragment>
+    <fragment
+        android:id="@+id/registration2"
+        android:name="edu.example.uplant.ui.view.AutorizationUI.Registration"
+        android:label="Registration"
+        tools:layout="@layout/fragment_registration">
+        <action
+            android:id="@+id/action_registration2_to_myPlantMain2"
+            app:destination="@id/myPlantMain2" />
+    </fragment>
+    <fragment
+        android:id="@+id/spravochnikMain2"
+        android:name="edu.example.uplant.ui.view.SpravochnikUI.SpravochnikMain"
+        android:label="SpravochnikMain"
+        tools:layout="@layout/fragment_spravochnik_main">
+        <action
+            android:id="@+id/action_spravochnikMain2_to_spravochnicSearch2"
+            app:destination="@id/spravochnicSearch2" />
+    </fragment>
+    <action
+        android:id="@+id/action_spravochnikMain2_to_spravochnicSearch2"
+        app:destination="@id/spravochnikMain2" />
+    <fragment
+        android:id="@+id/favoriteMain2"
+        android:name="edu.example.uplant.ui.view.FavoriteUI.FavoriteMain"
+        android:label="FavoriteMain"
+        tools:layout="@layout/fragment_favorite_main">
+        <action
+            android:id="@+id/action_favoriteMain2_to_pagerFragment2"
+            app:destination="@id/pagerFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileMain2"
+        android:name="edu.example.uplant.ui.view.ProfileUI.ProfileMain"
+        android:label="ProfileMain"
+        tools:layout="@layout/fragment_profile_main">
+        <action
+            android:id="@+id/action_profileMain2_to_authorization1"
+            app:destination="@id/authorization1" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_myPlantFragment"
+        app:destination="@id/myPlantMain2" />
+    <action
+        android:id="@+id/action_global_spravochnikFragment"
+        app:destination="@id/spravochnikMain2" />
+    <action
+        android:id="@+id/action_global_favoriteFragment"
+        app:destination="@id/favoriteMain2" />
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileMain2" />
+    <fragment
+        android:id="@+id/spravochnicSearch2"
+        android:name="edu.example.uplant.ui.view.SpravochnikUI.SpravochnicSearch"
+        android:label="SpravochnicSearch"
+        tools:layout="@layout/fragment_spravochnic_search">
+        <action
+            android:id="@+id/action_spravochnicSearch2_to_pagerFragment2"
+            app:destination="@id/pagerFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/pagerFragment2"
+        android:name="edu.example.uplant.ui.view.SpravochnikUI.PagerFragment"
+        android:label="PagerFragment"
+        tools:layout="@layout/fragment_pager"/>
+    <fragment
+        android:id="@+id/myPlantAllPlants2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.MyPlantAllPlants"
+        android:label="MyPlantAllPlants"
+        tools:layout="@layout/fragment_my_plant_all_plants">
+        <action
+            android:id="@+id/action_myPlantAllPlants2_to_myPlantNewCartochka2"
+            app:destination="@id/myPlantNewCartochka2" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPlantCategory2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.MyPlantCategory"
+        android:label="MyPlantCategory"
+        tools:layout="@layout/fragment_my_plant_category">
+        <action
+            android:id="@+id/action_myPlantCategory2_to_myPlantAllPlants2"
+            app:destination="@id/myPlantAllPlants2" />
+        <action
+            android:id="@+id/action_myPlantCategory2_to_sendMessage"
+            app:destination="@id/sendMessage" />
+        <action
+            android:id="@+id/action_myPlantCategory2_to_myPlantMain2"
+            app:destination="@id/myPlantMain2" />
+    </fragment>
+    <fragment
+        android:id="@+id/editMyPlant2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.EditMyPlant"
+        android:label="EditMyPlant"
+        tools:layout="@layout/fragment_edit_my_plant">
+        <action
+            android:id="@+id/action_editMyPlant2_to_pagerMyPlant2"
+            app:destination="@id/pagerMyPlant" />
+        <action
+            android:id="@+id/action_editMyPlant2_to_myPlantMain2"
+            app:destination="@id/myPlantMain2" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPlantNewCartochka2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.MyPlantNewCartochka"
+        android:label="MyPlantNewCartochka"
+        tools:layout="@layout/fragment_my_plant_new_cartochka">
+        <action
+            android:id="@+id/action_myPlantNewCartochka2_to_editNameNewCartochka2"
+            app:destination="@id/editNameNewCartochka2" />
+    </fragment>
+    <fragment
+        android:id="@+id/editNameNewCartochka2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.EditNameNewCartochka"
+        android:label="EditNameNewCartochka"
+        tools:layout="@layout/fragment_edit_name_new_cartochka">
+        <action
+            android:id="@+id/action_editNameNewCartochka2_to_myPlantOpisEdit2"
+            app:destination="@id/myPlantOpisEdit2" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPlantOpisEdit2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.MyPlantOpisEdit"
+        android:label="MyPlantOpisEdit"
+        tools:layout="@layout/fragment_opis_edit">
+        <action
+            android:id="@+id/action_myPlantOpisEdit2_to_myPlantZametkyEdit2"
+            app:destination="@id/myPlantZametkyEdit2" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPlantZametkyEdit2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.MyPlantZametkyEdit"
+        android:label="MyPlantZametkyEdit"
+        tools:layout="@layout/fragment_my_plant_zametky_e">
+        <action
+            android:id="@+id/action_myPlantZametkyEdit2_to_myPlantMain2"
+            app:destination="@id/myPlantMain2" />
+    </fragment>
+    <fragment
+        android:id="@+id/pagerMyPlant"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.PagerMyPlant"
+        android:label="PagerMyPlant"
+        tools:layout="@layout/fragment_pager_my_plant">
+        <action
+            android:id="@+id/action_pagerMyPlant_to_editMyPlant2"
+            app:destination="@id/editMyPlant2" />
+        <action
+            android:id="@+id/action_pagerMyPlant_to_myPlantInfoTodo2"
+            app:destination="@id/myPlantInfoTodo2" />
+        <action
+            android:id="@+id/action_pagerMyPlant_to_newNapominanieDemo2"
+            app:destination="@id/newNapominanieDemo2" />
+        <action
+            android:id="@+id/action_pagerMyPlant_to_newMoment2"
+            app:destination="@id/newMoment2" />
+        <action
+            android:id="@+id/action_pagerMyPlant_to_momentInfo2"
+            app:destination="@id/momentInfo2" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPlantNapMain2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.MyPlantNapMain"
+        android:label="MyPlantNapMain"
+        tools:layout="@layout/fragment_my_plant_nap_main">
+        <action
+            android:id="@+id/action_myPlantNapMain2_to_myPlantMain2"
+            app:destination="@id/myPlantMain2" />
+        <action
+            android:id="@+id/action_myPlantNapMain2_to_myPlantInfoTodo2"
+            app:destination="@id/myPlantInfoTodo2" />
+        <action
+            android:id="@+id/action_myPlantNapMain2_to_dialogDone"
+            app:destination="@id/dialogDone" />
+    </fragment>
+    <action
+        android:id="@+id/action_myPlantNapMain"
+        app:destination="@id/myPlantNapMain2" />
+    <fragment
+        android:id="@+id/newNapominanieDemo2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.NewNapominanieDemo"
+        android:label="NewNapominanieDemo"
+        tools:layout="@layout/fragment_new_napominanie_demo"/>
+    <fragment
+        android:id="@+id/myPlantInfoTodo2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.MyPlantInfoTodo"
+        android:label="MyPlantInfoTodo"
+        tools:layout="@layout/fragment_my_plant_info_todo"/>
+    <dialog
+        android:id="@+id/dialogDone"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.DialogDone"
+        android:label="DialogDone"
+        tools:layout="@layout/fragment_dialog_done"/>
+    <fragment
+        android:id="@+id/newMoment2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.NewMoment"
+        android:label="NewMoment"
+        tools:layout="@layout/fragment_new_moment"/>
+    <fragment
+        android:id="@+id/momentInfo2"
+        android:name="edu.example.uplant.ui.view.MyPlantUI.MomentInfo"
+        android:label="MomentInfo"
+        tools:layout="@layout/fragment_moment_info"/>
+    <fragment
+        android:id="@+id/sendMessage"
+        android:name="edu.example.uplant.SendMessage"
+        android:label="SendMessage"
+        tools:layout="@layout/fragment_send_message">
+        <action
+            android:id="@+id/action_sendMessage_to_correctRegister"
+            app:destination="@id/correctRegister"
+            app:popUpTo="@id/sendMessage"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/correctRegister"
+        android:name="edu.example.uplant.CorrectSendMessage"
+        android:label="CorrectRegister"
+        tools:layout="@layout/fragment_correctregister">
+        <action
+            android:id="@+id/action_correctRegister_to_myPlantCategory2"
+            app:destination="@id/myPlantCategory2"
+            app:popUpTo="@id/correctRegister"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

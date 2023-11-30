@@ -5,14 +5,10 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import java.util.List;
 
-import edu.example.uplant.data.data_sources.category.models.AddPlant1;
 import edu.example.uplant.data.data_sources.category.room.entites.AddPlant;
-import edu.example.uplant.data.data_sources.category.room.entites.MyPlant;
-import edu.example.uplant.data.data_sources.category.room.entites.Plant;
 
 
 @Dao
@@ -23,6 +19,9 @@ public interface AddPlantDao {
 
     @Query("SELECT * FROM plant_add ORDER BY plant ASC")
     LiveData<List<AddPlant>> getAllAddPlants();
+
+    @Query("SELECT * FROM plant_add WHERE iduser =:email ORDER BY plant ASC")
+    LiveData<List<AddPlant>> getAllUserAddPlants(String email);
 
     @Query("SELECT * FROM plant_add WHERE id = :id")
     LiveData<List<AddPlant>>  MyPlantAddVibor(int id);

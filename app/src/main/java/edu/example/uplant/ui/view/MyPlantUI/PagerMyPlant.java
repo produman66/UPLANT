@@ -13,6 +13,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -24,13 +27,15 @@ import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
+
 import edu.example.uplant.R;
 import edu.example.uplant.ui.view_models.MyPlantViewModel.PagerMyPlantViewModel;
 
 public class PagerMyPlant extends Fragment {
     Toolbar toolbar;
     PagerMyPlantViewModel mViewModel;
-    int intValue;
+    int intid;
     String strValue, desc, poliv, peres, udobr, zam, nameimage;
     AppCompatActivity activity;
 
@@ -40,7 +45,7 @@ public class PagerMyPlant extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_pager_my_plant, container, false);
         Bundle args = getArguments();
-        intValue = args.getInt("key1");
+        intid = args.getInt("key1");
         strValue = args.getString("key");
         desc = args.getString("key2");
         poliv = args.getString("key3");
@@ -56,11 +61,11 @@ public class PagerMyPlant extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                Navigation.findNavController(view).popBackStack();
             }
         });
         SectionsPagerAdapter pagerAdapter =
-                new SectionsPagerAdapter(getChildFragmentManager(), intValue);
+                new SectionsPagerAdapter(getChildFragmentManager(), intid);
         ViewPager pager = (ViewPager) view.findViewById(R.id.pager1);
         pager.setAdapter(pagerAdapter);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs1);
@@ -71,44 +76,49 @@ public class PagerMyPlant extends Fragment {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new PagerMyPlantViewModel(activity.getApplication(), intValue);
+                return (T) new PagerMyPlantViewModel(activity.getApplication());
             }
         }).get(PagerMyPlantViewModel.class);
         return view;
     }
-    private class SectionsPagerAdapter extends FragmentPagerAdapter {
-        private final String[] PAGE_TITLES = {
-                getResources().getText(R.string.home).toString(),
-                getResources().getText(R.string.napom).toString(),
-                getResources().getText(R.string.moment).toString(),
-        };
-        private int mStrValue;
 
-        public SectionsPagerAdapter(FragmentManager fm, int intValue) {
-            super(fm);
-            mStrValue = intValue;
-        }
-        @Override
-        public int getCount() {
-            return PAGE_TITLES.length;
-        }
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return MyPlantCartochka.newInstance(mStrValue);
-                case 1:
-                    return new MyPlantCartochka2();
-                case 2:
-                    return new MyPlantCartochka3();
+
+
+    private ArrayList<String> PAGE_TITLES;
+
+        private class SectionsPagerAdapter extends FragmentPagerAdapter {
+            private final String[] PAGE_TITLES = {
+                    getResources().getText(R.string.home).toString(),
+                    getResources().getText(R.string.zadanya).toString(),
+                    getResources().getText(R.string.moment).toString(),
+            };
+            private int mStrValue;
+
+            public SectionsPagerAdapter(FragmentManager fm, int intValue) {
+                super(fm);
+                mStrValue = intValue;
             }
-            return null;
+            @Override
+            public int getCount() {
+                return PAGE_TITLES.length;
+            }
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        return MyPlantCartochka.newInstance(mStrValue);
+                    case 1:
+                        return MyPlantCartochka2.newInstance(mStrValue, strValue);
+                    case 2:
+                        return MyPlantCartochka3.newInstance(mStrValue);
+                }
+                return null;
+            }
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return PAGE_TITLES[position];
+            }
         }
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return PAGE_TITLES[position];
-        }
-    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_redactor, menu); // надуваем меню из ресурсов
@@ -119,25 +129,15 @@ public class PagerMyPlant extends Fragment {
         // обрабатываем выбор элементов меню
         switch (item.getItemId()) {
             case R.id.action_edit:
-                Fragment fragment = new EditMyPlant();
                 Bundle args = new Bundle();
-                args.putInt("key", intValue);
-                fragment.setArguments(args);
-//                args.putString("key1", strValue);
-//                args.putString("key2", desc);
-//                args.putString("key3", poliv);
-//                args.putString("key4", peres);
-//                args.putString("key5", udobr);
-//                args.putString("key6", zam);
+                args.putInt("key", intid);
                 args.putString("key7", nameimage);
-//                args.putStringArrayList("textList", new ArrayList<>(textList));
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                NavController navController = NavHostFragment.findNavController(PagerMyPlant.this);
+                navController.navigate(R.id.action_pagerMyPlant_to_editMyPlant2, args);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }

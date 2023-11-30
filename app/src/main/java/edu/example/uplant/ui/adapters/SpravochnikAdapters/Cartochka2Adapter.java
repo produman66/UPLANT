@@ -6,12 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import edu.example.uplant.data.data_sources.category.room.entites.MyPlant;
+import edu.example.uplant.data.data_sources.category.models.MyPlantModel;
 import edu.example.uplant.ui.adapters.SpravochnikViewHolder.Cartochka2ViewHolder;
 
-public class Cartochka2Adapter extends ListAdapter<MyPlant, Cartochka2ViewHolder> {
+public class Cartochka2Adapter extends ListAdapter<MyPlantModel, Cartochka2ViewHolder> {
 
-    public Cartochka2Adapter(@NonNull DiffUtil.ItemCallback<MyPlant> diffCallback) {
+    public Cartochka2Adapter(@NonNull DiffUtil.ItemCallback<MyPlantModel> diffCallback) {
         super(diffCallback);
     }
 
@@ -23,18 +23,18 @@ public class Cartochka2Adapter extends ListAdapter<MyPlant, Cartochka2ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull Cartochka2ViewHolder holder, int position) {
-        MyPlant current = getItem(position);
-        holder.bind1(current.getmWord1(), current.getNameimage(), current.getPoliv());
+        MyPlantModel current = getItem(position);
+        holder.bind1(current.getPlantname(), current.getNameimage(), current.getPoliv());
     }
-    public static class PlantDiff extends DiffUtil.ItemCallback<MyPlant> {
+    public static class PlantDiff extends DiffUtil.ItemCallback<MyPlantModel> {
         @Override
-        public boolean areItemsTheSame(@NonNull MyPlant oldItem, @NonNull MyPlant newItem) {
+        public boolean areItemsTheSame(@NonNull MyPlantModel oldItem, @NonNull MyPlantModel newItem) {
             return oldItem == newItem;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull MyPlant oldItem, @NonNull MyPlant newItem) {
-            return oldItem.getmWord1().equals(newItem.getmWord1());
+        public boolean areContentsTheSame(@NonNull MyPlantModel oldItem, @NonNull MyPlantModel newItem) {
+            return oldItem.getPlantname().equals(newItem.getPlantname());
         }
     }
 

@@ -4,10 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.Authorization"
-    android:background="@color/white"
-    >
-
+    android:background="@color/white">
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="wrap_content"
@@ -40,6 +37,7 @@
             android:theme="@style/uplants1" />
 
         <EditText
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/example_gmai" />
@@ -52,9 +50,11 @@
             android:theme="@style/uplants1" />
 
         <EditText
+            android:id="@+id/pass"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/password" />
+            android:hint="@string/password"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 
     <Button
@@ -96,7 +96,6 @@
             android:layout_height="wrap_content"
             android:text="@string/create_ac"
             android:theme="@style/uplants1">
-
         </TextView>
     </LinearLayout>
 

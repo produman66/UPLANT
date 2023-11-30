@@ -6,9 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:background="@color/white">
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="edu.example.uplant.ui.FirstLaunch"/>
+        android:name="androidx.navigation.fragment.NavHostFragment"
+
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/navugation"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

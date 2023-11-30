@@ -11,26 +11,22 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import edu.example.uplant.data.data_sources.category.repositories.MyPlantRepository.PagerMyPlantRepository;
-import edu.example.uplant.data.data_sources.category.repositories.SpravochnikRepository.CartochkaRepository;
-import edu.example.uplant.data.data_sources.category.repositories.SpravochnikRepository.MyPlantRepository;
-import edu.example.uplant.data.data_sources.category.room.entites.AddPlant;
-import edu.example.uplant.data.data_sources.category.room.entites.MyPlant;
-import edu.example.uplant.ui.view.MyPlantUI.PagerMyPlant;
+import edu.example.uplant.data.data_sources.category.models.AddPlantModel;
+import edu.example.uplant.data.data_sources.category.repositories.AddPlantRepository1;
 
 public class PagerMyPlantViewModel extends AndroidViewModel {
-    private PagerMyPlantRepository mRepository;
-    private final LiveData<List<AddPlant>> mAllWords;
-    public PagerMyPlantViewModel(@NonNull Application application, int id) {
+    private AddPlantRepository1 mRepository;
+    public PagerMyPlantViewModel(@NonNull Application application) {
         super(application);
         try {
-            mRepository = new PagerMyPlantRepository(application, id);
-            mAllWords = mRepository.getplants();
+            mRepository = new AddPlantRepository1(application);
         } catch (Exception e) {
             // обработка исключения
             Log.e(TAG, "Error while creating MyPlantViewModel object", e);
             throw new RuntimeException("Error while creating MyPlantViewModel object", e);
         }
     }
-    public LiveData<List<AddPlant>> getAllWords() { return mAllWords; }
+    public LiveData<List<AddPlantModel>> getAllWords(int id) {
+        return mRepository.myPlantAddVibor(id);
+    }
 }

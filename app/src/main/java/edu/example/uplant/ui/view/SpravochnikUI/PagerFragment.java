@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -25,17 +26,21 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 import edu.example.uplant.R;
 import edu.example.uplant.ui.view_models.SpravochnikViewModel.PagerViewModel;
 
 public class PagerFragment extends Fragment {
-    private static final String STR_VALUE_KEY = "str_value_key";
     Toolbar toolbar;
     PagerViewModel mViewModel;
     String strValue;
-    Context context;
     AppCompatActivity activity;
+    FirebaseAuth mAuth;
+    String email;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +51,11 @@ public class PagerFragment extends Fragment {
         toolbar = view.findViewById(R.id.toolbar1);
         activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        email = user.getEmail();
+
         toolbar.setNavigationIcon(R.drawable.arrow_back);
         ToggleButton toggleButton = view.findViewById(R.id.toggle_button);
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -53,11 +63,11 @@ public class PagerFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // код, который выполнится, если кнопка переключена в состояние "включено"
-                    mViewModel.onFavoriteButtonClicked(strValue);
+                    mViewModel.onFavoriteButtonClicked(strValue, email);
                     Toast.makeText(getActivity(), "Добавлено в избранное", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    mViewModel.onFavoriteButtonClicked(strValue);
+                    mViewModel.onFavoriteButtonClicked(strValue, email);
                     Toast.makeText(getActivity(), "Удалено из избранного", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -66,7 +76,7 @@ public class PagerFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                Navigation.findNavController(v).popBackStack();
             }
         });
         SectionsPagerAdapter pagerAdapter =
@@ -91,18 +101,30 @@ public class PagerFragment extends Fragment {
                 getResources().getText(R.string.home).toString(),
                 getResources().getText(R.string.stores).toString(),
                 getResources().getText(R.string.pizza).toString(),
-                getResources().getText(R.string.pasta).toString()
+                getResources().getText(R.string.pizza).toString()
         };
         private String mStrValue;
+        private ArrayList<String> PAGE_TITLES1;
 
         public SectionsPagerAdapter(FragmentManager fm, String strValue) {
             super(fm);
             mStrValue = strValue;
+            PAGE_TITLES1= new ArrayList<>();
+            PAGE_TITLES1.add(getResources().getText(R.string.home).toString());
+            PAGE_TITLES1.add(getResources().getText(R.string.stores).toString());
+            PAGE_TITLES1.add(getResources().getText(R.string.pizza).toString());
+            PAGE_TITLES1.add(getResources().getText(R.string.udobr).toString());
+            PAGE_TITLES1.add(getResources().getText(R.string.razmnozhenie).toString());
+            PAGE_TITLES1.add(getResources().getText(R.string.obrezka).toString());
+            PAGE_TITLES1.add(getResources().getText(R.string.zashita).toString());
+            PAGE_TITLES1.add(getResources().getText(R.string.svet).toString());
+            PAGE_TITLES1.add(getResources().getText(R.string.temp).toString());
+            PAGE_TITLES1.add(getResources().getText(R.string.vlazh).toString());
         }
 
         @Override
         public int getCount() {
-            return PAGE_TITLES.length;
+            return PAGE_TITLES1.size();
         }
 
         @Override
@@ -116,13 +138,26 @@ public class PagerFragment extends Fragment {
                     return CartochkaSpravochnika3.newInstance(mStrValue);
                 case 3:
                     return CartochkaSpravochnika4.newInstance(mStrValue);
+                case 4:
+                    return CartochkaSpravochnika5.newInstance(mStrValue);
+                case 5:
+                    return CartochkaSpravochnika6.newInstance(mStrValue);
+                case 6:
+                    return CartochkaSpravochnika7.newInstance(mStrValue);
+                case 7:
+                    return CartochkaSpravochnika8.newInstance(mStrValue);
+                case 8:
+                    return CartochkaSpravochnika9.newInstance(mStrValue);
+                case 9:
+                    return CartochkaSpravochnika10.newInstance(mStrValue);
+
             }
             return null;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return PAGE_TITLES[position];
+            return PAGE_TITLES1.get(position);
         }
     }
 

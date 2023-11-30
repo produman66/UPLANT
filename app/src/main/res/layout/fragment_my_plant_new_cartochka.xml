@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:context=".ui.view.MyPlantUI.MyPlantNewCartochka"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background">
     <androidx.appcompat.widget.Toolbar

@@ -20,17 +20,24 @@ public interface PlantsWithMyPlants {
     @Query("DELETE FROM plant_categ_table")
     void deleteAll();
 
-    @Query("SELECT * FROM MyPlant WHERE idcategori = :idcategori")
-    LiveData<List<MyPlant>> loadMyPlantsByCategoryId(int idcategori);
+    @Query("SELECT COUNT(*) FROM MyPlant WHERE idemail = :email AND plantname =:name")
+    int checkEmailExists(String email, String name);
 
-    @Query("SELECT * FROM MyPlant WHERE plantname = :name")
-    LiveData<List<MyPlant>>  MyPlantVibor(String name);
 
-    @Query("UPDATE MyPlant SET favorite = NOT favorite WHERE plantname = :nameValue")
-    void toggleBooleanValue(String nameValue);
+    @Query("SELECT * FROM MyPlant WHERE idcateg = :idcategori AND idemail=:idemail")
+    LiveData<List<MyPlant>> loadMyPlantsByCategoryId(int idcategori, String idemail);
 
-    @Query("SELECT * FROM MyPlant WHERE favorite = 1")
-    LiveData<List<MyPlant>> getMyPlantWithMTrue();
+    @Query("SELECT * FROM MyPlant WHERE plantname = :name AND idemail = :idemail")
+    LiveData<List<MyPlant>>  MyPlantVibor(String name, String idemail);
+
+    @Query("UPDATE MyPlant SET favorite = NOT favorite WHERE plantname = :nameValue AND idemail = :email")
+    void toggleBooleanValue(String nameValue, String email);
+
+    @Query("SELECT * FROM MyPlant WHERE favorite = 1 AND idemail=:email")
+    LiveData<List<MyPlant>> getMyPlantWithMTrue(String email);
+
+    @Query("SELECT * FROM MyPlant WHERE plantname LIKE :searchQuery AND idemail = :email")
+    LiveData<List<MyPlant>> searchDatabase(String searchQuery, String email);
 
 
 }

@@ -21,7 +21,7 @@ import edu.example.uplant.ui.view_models.MyPlantViewModel.PagerMyPlantViewModel;
 public class MyPlantCartochka extends Fragment {
     PagerMyPlantViewModel mViewModel;
     private static final String STR_VALUE_KEY = "key";
-    private int mStrValue;
+    private int id;
     PagerMyPlantAdapter adapter;
 
     public static MyPlantCartochka newInstance(int strValue) {
@@ -36,7 +36,7 @@ public class MyPlantCartochka extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_plant_cartochka, container, false);
-        mStrValue = getArguments().getInt(STR_VALUE_KEY);
+        id = getArguments().getInt(STR_VALUE_KEY);
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         RecyclerView recyclerView = view.findViewById(R.id.plantrecycler61);
         adapter = new PagerMyPlantAdapter(new PagerMyPlantAdapter.PlantDiff());
@@ -46,10 +46,10 @@ public class MyPlantCartochka extends Fragment {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new PagerMyPlantViewModel(activity.getApplication(), mStrValue);
+                return (T) new PagerMyPlantViewModel(activity.getApplication());
             }
         }).get(PagerMyPlantViewModel.class);
-        mViewModel.getAllWords().observe(getActivity(), words -> {
+        mViewModel.getAllWords(id).observe(getActivity(), words -> {
             adapter.submitList(words);
         });
         return view;

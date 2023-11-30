@@ -7,24 +7,21 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import edu.example.uplant.data.data_sources.category.models.AddPlant1;
-import edu.example.uplant.data.data_sources.category.models.Item;
-import edu.example.uplant.data.data_sources.category.repositories.MyPlantRepository.AddPlantRepository;
-import edu.example.uplant.data.data_sources.category.room.entites.AddPlant;
+import edu.example.uplant.data.data_sources.category.models.AddPlantModel;
+
+import edu.example.uplant.data.data_sources.category.repositories.AddPlantRepository1;
 
 public class AddPlantViewModel extends AndroidViewModel {
-    private AddPlantRepository repo;
-    private LiveData<List<AddPlant1>> mItems;
+    private AddPlantRepository1 repo;
+    private LiveData<List<AddPlantModel>> mItems;
 
-    public AddPlantViewModel(Application application, String name, String desc, String poliv, String peresad, String udobr, String nameimage, String zametky) {
+    public AddPlantViewModel(Application application) {
         super(application);
-        this.repo = new AddPlantRepository(application, name, desc, poliv, peresad, udobr, nameimage, zametky);
+        this.repo = new AddPlantRepository1(application);
         mItems = repo.getDatabaseData();
     }
-    public LiveData<List<AddPlant1>> getItems() {
-        return mItems;
-    }
-    public void addPlant(String name, String desc, String poliv, String peresad, String udobr, String nameimage, String zametky) {
-        repo.addPlant(new AddPlant(name, desc, poliv, peresad, udobr, nameimage, zametky));
+
+    public void addPlant(int id, String idUser, String name, String desc, String poliv, String peresad, String udobr, String nameimage, String zametky) {
+        repo.addPlant(new AddPlantModel(id, idUser, name, desc, poliv, peresad, udobr, nameimage, zametky));
     }
 }

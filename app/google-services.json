@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "65813742317",
+    "firebase_url": "https://uplant-35c79-default-rtdb.firebaseio.com",
+    "project_id": "uplant-35c79",
+    "storage_bucket": "uplant-35c79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65813742317:android:f1766b3f1c6e8e64f242e4",
+        "android_client_info": {
+          "package_name": "edu.example.uplant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65813742317-dbifb9li0042hat8kkb44trgbqtmtk6p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg4fEgG2cfurHrymi5v5R1AovixonJO7w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65813742317-dbifb9li0042hat8kkb44trgbqtmtk6p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

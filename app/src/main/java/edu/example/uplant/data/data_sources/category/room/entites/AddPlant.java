@@ -6,16 +6,34 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import edu.example.uplant.data.data_sources.category.models.AddPlant1;
-import edu.example.uplant.data.data_sources.category.models.Item;
+import edu.example.uplant.data.data_sources.category.models.AddPlantModel;
 
-@Entity(tableName = "plant_add")
+@Entity(tableName = "plant_add", foreignKeys = @ForeignKey(entity = Users.class,
+        parentColumns = "email",
+        childColumns = "iduser",
+        onDelete = ForeignKey.CASCADE))
 public class AddPlant {
+
     @PrimaryKey(autoGenerate = true)
     public int id;
+
+    @NonNull
+    public String getIduser() {
+        return iduser;
+    }
+
+    public void setIduser(@NonNull String iduser) {
+        this.iduser = iduser;
+    }
+
+    @NonNull
+    @ColumnInfo(name = "iduser")
+    public String iduser;
+
 
     @NonNull
     @ColumnInfo(name = "plant")
@@ -92,11 +110,13 @@ public class AddPlant {
         return image;
     }
 
-    public AddPlant1 toDomainMode() {
-        return new AddPlant1(name, desc, poliv, peresad, udobr, nameimage, zametky);
+    public AddPlantModel toDomainModel() {
+        return new AddPlantModel(id, iduser, name, desc, poliv, peresad, udobr, nameimage, zametky);
     }
 
-    public AddPlant(@NonNull String name, @NonNull String desc, @NonNull String poliv, @NonNull String peresad, @NonNull String udobr, String nameimage, String zametky) {
+    public AddPlant(@NonNull String iduser, @NonNull String name, @NonNull String desc, @NonNull String poliv, @NonNull String peresad, @NonNull String udobr, String nameimage, String zametky) {
+        this.id = id;
+        this.iduser = iduser;
         this.name=name;
         this.desc=desc;
         this.poliv=poliv;

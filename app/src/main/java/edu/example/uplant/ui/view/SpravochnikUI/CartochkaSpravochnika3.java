@@ -15,16 +15,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import edu.example.uplant.R;
-import edu.example.uplant.ui.view_models.SpravochnikViewModel.Cartochka3ViewModel;
 import edu.example.uplant.ui.adapters.SpravochnikAdapters.Cartochka3Adapter;
+import edu.example.uplant.ui.view_models.SpravochnikViewModel.CartochkaViewModel;
 
 public class CartochkaSpravochnika3 extends Fragment {
     Toolbar toolbar;
-    Cartochka3ViewModel mViewModel;
+    CartochkaViewModel mViewModel;
     private static String STR_VALUE_KEY2 = "key";
     private String mStrValue;
     Cartochka3Adapter adapter;
+    private FirebaseAuth mAuth;
 
     public static CartochkaSpravochnika3 newInstance(String strValue) {
         CartochkaSpravochnika3 fragment = new CartochkaSpravochnika3();
@@ -48,11 +52,14 @@ public class CartochkaSpravochnika3 extends Fragment {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new Cartochka3ViewModel(getActivity().getApplication(), mStrValue);
+                return (T) new CartochkaViewModel(getActivity().getApplication());
             }
-        }).get(Cartochka3ViewModel.class);
+        }).get(CartochkaViewModel.class);
 
-        mViewModel.getAllWords().observe(getActivity(), words -> {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String email = user.getEmail();
+        mViewModel.getAllWords(mStrValue, email).observe(getActivity(), words -> {
             adapter.submitList(words);
         });
         return view;

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.FirstLaunch"
     android:background="@color/white">
 
     <ImageView
@@ -113,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/round_background"
-            android:text="@string/next"
+            android:text="Поехали!"
             android:id="@+id/thirddalee"
             android:backgroundTint="@color/green_600"
             android:textColor="@color/white">

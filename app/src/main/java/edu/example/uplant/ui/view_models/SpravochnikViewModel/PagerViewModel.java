@@ -8,14 +8,16 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import edu.example.uplant.data.data_sources.category.repositories.SpravochnikRepository.PagerRepository;
+import edu.example.uplant.data.data_sources.category.repositories.MyPlantRepository;
 
 public class PagerViewModel extends AndroidViewModel {
-    private PagerRepository mRepository;
+    private MyPlantRepository mRepository;
+
     public PagerViewModel(@NonNull Application application, String name) {
         super(application);
         try {
-            mRepository = new PagerRepository(application, name);
+            mRepository = new MyPlantRepository(application);
+
         } catch (Exception e) {
             // обработка исключения
             Log.e(TAG, "Error while creating MyPlantViewModel object", e);
@@ -23,7 +25,12 @@ public class PagerViewModel extends AndroidViewModel {
         }
     }
 
-    public void onFavoriteButtonClicked(String plantName) {
-        mRepository.toggleBooleanValue(plantName);
+    public void onFavoriteButtonClicked(String plantName, String email) {
+        mRepository.ToggleBooleanValue(plantName, email);
     }
+
+    public void newacc() {
+        mRepository.NewAcc();
+    }
+
 }

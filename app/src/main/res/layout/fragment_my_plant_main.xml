@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/myplantmain"
-    tools:context=".ui.view.MyPlantUI.MyPlantMain">
+    android:id="@+id/spravochnicSearch">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -36,19 +35,50 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
+            android:id="@+id/liner"
+            android:gravity="center_horizontal"
             android:padding="5dp">
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggle_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@color/white"
+                app:checkedButton="@id/button_1"
+                app:singleSelection="true">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Растения"
+                    android:elevation="0dp"
+                    app:cornerRadius="10dp"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_2"
+                    android:layout_width="0dp"
+                    android:textColor="@color/green_600"
+                    android:backgroundTint="@color/white"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Напоминания"
+                    android:elevation="0dp"
+                    app:cornerRadius="10dp"
+                    app:strokeWidth="2sp"
+                    app:strokeColor="@color/green_600"/>
+            </com.google.android.material.button.MaterialButtonToggleGroup>
             <include
                 layout="@layout/item"
                 android:id="@+id/addPlant"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerAdd"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="80dp">
-                </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerAdd"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="80dp">
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <androidx.constraintlayout.widget.ConstraintLayout

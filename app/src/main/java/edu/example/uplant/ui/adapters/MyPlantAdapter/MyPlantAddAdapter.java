@@ -7,29 +7,32 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import edu.example.uplant.data.data_sources.category.models.AddPlant1;
+import edu.example.uplant.data.data_sources.category.models.AddPlantModel;
 import edu.example.uplant.data.data_sources.category.room.entites.AddPlant;
+import edu.example.uplant.ui.adapters.ButtonClickListener;
 import edu.example.uplant.ui.adapters.CustomerClickListener;
 import edu.example.uplant.ui.adapters.MyPlantViewHolder.MyPlantAddViewHolder;
 
-public class MyPlantAddAdapter extends ListAdapter<AddPlant, MyPlantAddViewHolder> {
+public class MyPlantAddAdapter extends ListAdapter<AddPlantModel, MyPlantAddViewHolder> {
 
     private CustomerClickListener listener;
+    private ButtonClickListener btnlistener;
 
-    public MyPlantAddAdapter(@NonNull DiffUtil.ItemCallback<AddPlant> diffCallback, CustomerClickListener listener) {
+    public MyPlantAddAdapter(@NonNull DiffUtil.ItemCallback<AddPlantModel> diffCallback, CustomerClickListener listener, ButtonClickListener btnlistener) {
         super(diffCallback);
         this.listener = listener;
+        this.btnlistener = btnlistener;
     }
 
     @NonNull
     @Override
     public MyPlantAddViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return MyPlantAddViewHolder.create(parent, listener);
+        return MyPlantAddViewHolder.create(parent, listener, btnlistener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyPlantAddViewHolder holder, int position) {
-        AddPlant current = getItem(position);
+        AddPlantModel current = getItem(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,14 +42,14 @@ public class MyPlantAddAdapter extends ListAdapter<AddPlant, MyPlantAddViewHolde
         holder.bind(current.getName(), current.getNameimage());
     }
 
-    public static class PlantDiff extends DiffUtil.ItemCallback<AddPlant> {
+    public static class PlantDiff extends DiffUtil.ItemCallback<AddPlantModel> {
         @Override
-        public boolean areItemsTheSame(@NonNull AddPlant oldItem, @NonNull AddPlant newItem) {
+        public boolean areItemsTheSame(@NonNull AddPlantModel oldItem, @NonNull AddPlantModel newItem) {
             return oldItem == newItem;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull AddPlant oldItem, @NonNull AddPlant newItem) {
+        public boolean areContentsTheSame(@NonNull AddPlantModel oldItem, @NonNull AddPlantModel newItem) {
             return oldItem.getName().equals(newItem.getName());
         }
     }

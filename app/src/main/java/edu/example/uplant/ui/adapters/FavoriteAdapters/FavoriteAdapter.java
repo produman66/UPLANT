@@ -7,15 +7,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import edu.example.uplant.data.data_sources.category.room.entites.MyPlant;
+import edu.example.uplant.data.data_sources.category.models.MyPlantModel;
 import edu.example.uplant.ui.adapters.CustomerClickListener;
 import edu.example.uplant.ui.adapters.FavoriteViewHolder.FavoriteViewHolder;
 
-public class FavoriteAdapter extends ListAdapter<MyPlant, FavoriteViewHolder> {
+public class FavoriteAdapter extends ListAdapter<MyPlantModel, FavoriteViewHolder> {
 
     private CustomerClickListener listener;
 
-    public FavoriteAdapter(@NonNull DiffUtil.ItemCallback<MyPlant> diffCallback, CustomerClickListener listener) {
+    public FavoriteAdapter(@NonNull DiffUtil.ItemCallback<MyPlantModel> diffCallback, CustomerClickListener listener) {
         super(diffCallback);
         this.listener = listener;
     }
@@ -27,25 +27,24 @@ public class FavoriteAdapter extends ListAdapter<MyPlant, FavoriteViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
-        MyPlant current = getItem(position);
+        MyPlantModel current = getItem(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onCustomerClick(position);
             }
         });
-        holder.bind(current.getmWord1(), current.getNameimage());
-        holder.bind(current.getmWord1(), current.getNameimage());
+        holder.bind(current.getPlantname(), current.getNameimage());
     }
-    public static class PlantDiff extends DiffUtil.ItemCallback<MyPlant> {
+    public static class PlantDiff extends DiffUtil.ItemCallback<MyPlantModel> {
         @Override
-        public boolean areItemsTheSame(@NonNull MyPlant oldItem, @NonNull MyPlant newItem) {
+        public boolean areItemsTheSame(@NonNull MyPlantModel oldItem, @NonNull MyPlantModel newItem) {
             return oldItem == newItem;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull MyPlant oldItem, @NonNull MyPlant newItem) {
-            return oldItem.getmWord1().equals(newItem.getmWord1());
+        public boolean areContentsTheSame(@NonNull MyPlantModel oldItem, @NonNull MyPlantModel newItem) {
+            return oldItem.getPlantname().equals(newItem.getPlantname());
         }
     }
 }

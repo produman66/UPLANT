@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/coordinator1"
-    tools:context=".ui.view.MyPlantUI.MyPlantCategory">
+    android:id="@+id/coordinator1">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar12"
         android:layout_width="0dp"
@@ -20,24 +19,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <EditText
-        android:id="@+id/search_text"
-        android:layout_width="0dp"
+    <include
+        android:id="@+id/sug_plant"
+        layout="@layout/item_suggest_plant"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="Здесь будет поиск растений"
-        app:layout_constraintBottom_toTopOf="@+id/plantrecycler12"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar12"
-        app:layout_constraintStart_toStartOf="@+id/toolbar12"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar12" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/plantrecycler12"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_text"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/sug_plant" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,6 +19,6 @@ public interface PlantDao {
     void deleteAll();
 
     @Query("SELECT * FROM plant_categ_table ORDER BY plant ASC")
-    LiveData<List<Plant>> getAlphabetizedWords();
+    LiveData<List<Plant>> getAllPlants();
 
 }
